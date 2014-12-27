@@ -7,13 +7,40 @@ class TreeNode:
     self.leftNodeNum = 0
 
 class BinarySearchTree:
+  def __init__(self, arr):
+    self.buildTree(arr)
+
+  def insertNode(self, val):
+    curr = self.root
+    while True:
+      if val > curr.val:
+        if curr.right:
+          curr = curr.right
+        else:
+          curr.right = TreeNode(val)
+          return
+      else:
+        curr.leftNodeNum += 1
+        if curr.left:
+          curr = curr.left
+        else:
+          curr.left = TreeNode(val)
+          return
+
+  def buildTree(self, array):
+    if not array:
+      return None
+    self.root = TreeNode(array[0])
+    for i in range(1, len(array)):
+      self.insertNode(array[i])
+
   def inorderTraverse(self, root):
     if root:
       self.inorderTraverse(root.left)
       print root.val,
       self.inorderTraverse(root.right)
 
-  def kthSmallestInOrder(self, root, k):
+  def kthSmallestInOrder(self, root, k = 1):
     count = 0
     curr = root
     while curr:
@@ -36,31 +63,7 @@ class BinarySearchTree:
         curr = curr.right
         pt.right = None
 
-  def insertNode(self, root, val):
-    curr = root
-    while True:
-      if val > curr.val:
-        if curr.right:
-          curr = curr.right
-        else:
-          curr.right = TreeNode(val)
-          return
-      else:
-        curr.leftNodeNum += 1
-        if curr.left:
-          curr = curr.left
-        else:
-          curr.left = TreeNode(val)
-          return
-
-  def buildTree(self, array):
-    if not array:
-      return None
-    self.root = TreeNode(array[0])
-    for i in range(1, len(array)):
-      self.insertNode(self.root, array[i])
-
-  def kthSmallest(self, root, k):
+  def kthSmallest(self, root, k = 1):
     if not root:
       print 'kth smallest not found'
       return
@@ -72,9 +75,23 @@ class BinarySearchTree:
     else:
       return self.kthSmallest(root.left, k)
 
-sol = BinarySearchTree()
-sol.buildTree([20, 8, 22, 4, 12, 10, 14])
+  # No.11 get the longest distance between two nodes in a binary tree
+  def getHeight(self, root):
+    if not root:
+      return 0
+    return max(self.getHeight(root.left), self.getHeight(root.right)) + 1
+
+  def longestDistance(self, root):
+    if not root:
+      return 0
+    return max(self.longestDistance(root.left), \
+      self.longestDistance(root.right), \
+      self.getHeight(root.left) + 1 + self.getHeight(root.right))
+
+sol = BinarySearchTree([20, 8, 22, 4, 12, 10, 14])
 sol.inorderTraverse(sol.root)
 print
-sol.kthSmallestInOrder(sol.root, 1)
-sol.kthSmallest(sol.root, 1)
+# sol.kthSmallestInOrder(sol.root, 1)
+# sol.kthSmallest(sol.root, 1)
+print sol.getHeight(sol.root)
+print sol.longestDistance(sol.root)
