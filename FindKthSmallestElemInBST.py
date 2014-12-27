@@ -77,6 +77,9 @@ class BinarySearchTree:
 
   # No.11 get the longest distance between two nodes in a binary tree
   def getLongestDist(self, root):
+    '''
+    add a new attribute to node
+    '''
     if not root.left and not root.right:
       root.depth = 1
       return 0
