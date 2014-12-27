@@ -76,22 +76,22 @@ class BinarySearchTree:
       return self.kthSmallest(root.left, k)
 
   # No.11 get the longest distance between two nodes in a binary tree
-  def getHeight(self, root):
-    if not root:
+  def getLongestDist(self, root):
+    if not root.left and not root.right:
+      root.depth = 1
       return 0
-    return max(self.getHeight(root.left), self.getHeight(root.right)) + 1
+    left = self.getLongestDist(root.left)
+    right = self.getLongestDist(root.right)
+    root.depth = max(root.left.depth, root.right.depth) + 1
+    return max(root.left.depth + root.right.depth + 1, left, right)
 
   def longestDistance(self, root):
-    if not root:
-      return 0
-    return max(self.longestDistance(root.left), \
-      self.longestDistance(root.right), \
-      self.getHeight(root.left) + 1 + self.getHeight(root.right))
+    return self.getLongestDist(root)
 
 sol = BinarySearchTree([20, 8, 22, 4, 12, 10, 14])
 sol.inorderTraverse(sol.root)
 print
 # sol.kthSmallestInOrder(sol.root, 1)
 # sol.kthSmallest(sol.root, 1)
-print sol.getHeight(sol.root)
-print sol.longestDistance(sol.root)
+# print sol.getHeight(sol.root)
+print sol.longestDistance(sol.root.left)
