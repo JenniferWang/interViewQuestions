@@ -1,23 +1,22 @@
 import sys
 def computeArrayA(A, B, C):
   modulo = 10**9 + 7
-  cache = {}
-  for i in range(len(B)):
-    val = B[i]% modulo
-    if val in cache:
-      cache[val] *= C[i]
-    else:
-      cache[val] = C[i]
-
-  for key in cache:
-    curr = key - 1
+  min_B = min(B)
+  max_B = max(B)
+  cache = [1 for x in range(max_B - min_B + 1)]
+  for i, val in enumerate(B):
+    cache[val - min_B] = (cache[val - min_B] * C[i]) % modulo
+  
+  for i, val in enumerate(cache):
+    curr = i + min_B - 1
     while curr < len(A):
-      A[curr] = (A[curr] * cache[key]) % modulo
-      curr += key
+      A[curr] = (A[curr] * val) % modulo
+      curr += i + min_B
   print ' '.join(map(str, A))
 
 def main():
-  g = sys.stdin
+  #g = sys.stdin
+  g = open('SHERLOCK_TLE')
   #g = open('SHERLOCK')
   g.readline()
   str_A = g.readline().split()
