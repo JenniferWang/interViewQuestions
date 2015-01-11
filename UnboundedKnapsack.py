@@ -11,12 +11,12 @@ class Knapsack:
       for load in self.loads:
         if i + 1 == load or (i + 1 - load > 0 and dp[i - load]):
           dp[i] = True
-          break
 
     for i in range(len(dp) - 1, -1, -1):
       if dp[i]:
         return i + 1
-
+    return 0
+    
 def main():
   g = sys.stdin
   #g = open('KNAPSACK')
