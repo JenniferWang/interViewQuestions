@@ -1,3 +1,5 @@
+# https://www.hackerrank.com/challenges/strplay
+# http://www.geeksforgeeks.org/dynamic-programming-set-12-longest-palindromic-subsequence/
 import sys
 class Words:
   def __init__(self, words):
