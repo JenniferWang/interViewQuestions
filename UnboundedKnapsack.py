@@ -5,26 +5,26 @@ class Knapsack:
     self.loads = loads
     self.cache = set(loads)
 
-  def memo(self, target):
-    if target in self.cache:
-      return True
-    for load in self.loads:
-      if target - load > 0 and self.memo(target - load):
-        self.cache.add(target)
-        return True
-    return False
-
   def knapsack(self, target):
-    if target < min(self.loads):
-      return 0
-    for t in range(target, -1, -1):
-      if self.memo(t):
-        return t
-    return 0
+    dp = [False for x in range(target)]
+    for i in range(len(dp)):
+      for load in self.loads:
+        if i + 1 == load or (i + 1 - load > 0 and dp[i - load]):
+          dp[i] = True
+          break
+
+    for i in range(len(dp) - 1, -1, -1):
+      if dp[i]:
+        return i + 1
 
 def main():
-  #g = sys.stdin
-  g = open('KNAPSACK')
+  g = sys.stdin
+  #g = open('KNAPSACK')
+  #ans:
+  # 2000
+  # 10
+  # 2000
+  # 1999
   num_tests = int(g.readline())
   for _ in range(num_tests):
     [n, target] = map(int, g.readline().split())
