@@ -1,15 +1,16 @@
 import sys
 def maximizeStockProfit(array):
-  if array == []:
+  if len(array) == 0 or len(array) == 1:
     return 0
-  if len(array) == 1:
-    return 0
-  max_index = array.index(max(array))
   profit = 0
-  for i in range(max_index):
-    profit += array[max_index] - array[i]
-  return profit + maximizeStockProfit(array[max_index + 1:])
-    
+  curr_max = array[-1]
+  for i in xrange(len(array) - 1, -1, -1):
+    if array[i] < curr_max:
+      profit += curr_max - array[i]
+    else:
+      curr_max = array[i]
+  return profit
+
 def main():
   g = sys.stdin
   num_tests = int(g.readline())
